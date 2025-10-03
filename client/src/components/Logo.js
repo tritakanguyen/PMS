@@ -12,6 +12,10 @@ const Logo = ({ width = 32, height = 32, className = "" }) => {
     >
       {/* Background circle */}
       <circle cx="16" cy="16" r="16" fill="#05A0D1" />
+
+      {/* Border ring to improve contrast against header */}
+      {/* Using currentColor so it inherits surrounding text color (white in header) */}
+      <circle cx="16" cy="16" r="15" fill="none" stroke="currentColor" strokeWidth="2" />
       
       {/* Robot arm base */}
       <rect x="4" y="20" width="6" height="8" rx="1" fill="#0284c7" />
