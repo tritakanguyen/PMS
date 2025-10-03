@@ -15,8 +15,9 @@ backend:
 frontend:
   name: pms-frontend
   type: static
-  buildCommand: cd client && npm install && npm run build
-  publishDirectory: client/build
+  rootDir: client
+  buildCommand: npm install && npm run build
+  publishDirectory: build
   env:
     - REACT_APP_API_URL=https://pms-backend-60nq.onrender.com
     - NODE_ENV=production
