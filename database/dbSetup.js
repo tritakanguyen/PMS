@@ -4,7 +4,7 @@ const connectDB = async () => {
   try {
     const mongoURI =
       process.env.MONGODB_URI ||
-      "mongodb+srv://admin:connecttodb@podmanagement.yv8dt9t.mongodb.net/podManagement";
+      "mongodb+srv://admin:JXZWEMU6z4w1SvIJ@podmanagement.yv8dt9t.mongodb.net/podManagement";
     await mongoose.connect(mongoURI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
