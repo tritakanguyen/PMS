@@ -1,17 +1,15 @@
-# Note: This render.yaml is for reference.
-# You'll need to create separate services in Render dashboard.
-
 # Backend Service Configuration (Create as Web Service)
 backend:
   name: pms-backend
   type: web
   runtime: node
-  buildCommand: cd server && npm install
+  buildCommand: cd database && npm install && cd ../server && npm install
   startCommand: cd server && npm start
   env:
     - NODE_ENV=production
     - PORT=5000
-    # Add MongoDB connection string in Render dashboard
+    - MONGODB_URI=mongodb+srv://<admin>:<JXZWEMU6z4w1SvIJ>@podmanagement.yv8dt9t.mongodb.net/?retryWrites=true&w=majority&appName=podManagement
+    - ALLOWED_ORIGINS=https://pms-eqvv.onrender.com
 
 # Frontend Service Configuration (Create as Static Site)
 frontend:
@@ -20,6 +18,6 @@ frontend:
   buildCommand: cd client && npm install && npm run build
   publishDirectory: client/build
   env:
-    - REACT_APP_API_URL=https://your-backend-url.onrender.com
+    - REACT_APP_API_URL=https://pms-backend-60nq.onrender.com
     - NODE_ENV=production
     - GENERATE_SOURCEMAP=false
