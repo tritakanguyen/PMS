@@ -1,0 +1,29 @@
+{
+  "name": "pod-managing-database",
+  "version": "1.0.0",
+  "description": "Database utilities for Pod Management System",
+  "main": "index.js",
+  "scripts": {
+    "upload-bins": "node uploadBinsToDatabase.js",
+    "reconstruct-bins": "node reconstructBinItems.js",
+    "initialize-data": "node initializeData.js",
+    "verify-collections": "node verifyCollections.js",
+    "migrate-pod-schema": "node migratePodSchema.js",
+    "remove-faceid": "node removeFaceIdField.js",
+    "update-pod-schema": "node updatePodCollectionSchema.js"
+  },
+  "dependencies": {
+    "csv-parser": "^3.2.0",
+    "mongodb": "^6.0.0",
+    "mongoose": "^8.18.3",
+    "node-fetch": "^2.7.0"
+  },
+  "keywords": [
+    "mongodb",
+    "csv",
+    "database",
+    "pod-management"
+  ],
+  "author": "",
+  "license": "ISC"
+}

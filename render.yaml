@@ -1,0 +1,25 @@
+# Note: This render.yaml is for reference.
+# You'll need to create separate services in Render dashboard.
+
+# Backend Service Configuration (Create as Web Service)
+backend:
+  name: pms-backend
+  type: web
+  runtime: node
+  buildCommand: cd server && npm install
+  startCommand: cd server && npm start
+  env:
+    - NODE_ENV=production
+    - PORT=5000
+    # Add MongoDB connection string in Render dashboard
+
+# Frontend Service Configuration (Create as Static Site)
+frontend:
+  name: pms-frontend
+  type: static
+  buildCommand: cd client && npm install && npm run build
+  publishDirectory: client/build
+  env:
+    - REACT_APP_API_URL=https://your-backend-url.onrender.com
+    - NODE_ENV=production
+    - GENERATE_SOURCEMAP=false

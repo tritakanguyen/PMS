@@ -1,0 +1,34 @@
+{
+  "name": "pod-management-system",
+  "version": "1.0.0",
+  "description": "Full-stack warehouse pod management system",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "cd server && npm start",
+    "dev": "cd server && npm run dev",
+    "build": "cd client && npm run build",
+    "install-client": "cd client && npm install",
+    "install-server": "cd server && npm install",
+    "install-database": "cd database && npm install",
+    "install-all": "npm run install-server && npm run install-client && npm run install-database",
+    "heroku-postbuild": "npm run install-all && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/pod-management-system.git"
+  },
+  "keywords": [
+    "warehouse",
+    "pod-management",
+    "react",
+    "nodejs",
+    "mongodb",
+    "inventory"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
+}
