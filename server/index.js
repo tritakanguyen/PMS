@@ -1111,7 +1111,7 @@ app.patch("/items/bulk-status", async (req, res) => {
 // Additional API endpoints for better frontend support
 
 // Health check endpoint
-app.get("/health", (req, res) => {
+app.get("/health", async (req, res) => {
   try {
     const dbState = mongoose.connection.readyState;
     const dbStatus = {
@@ -1121,22 +1121,42 @@ app.get("/health", (req, res) => {
       3: "disconnecting",
     };
 
-    // Additional check: if connection exists and we can access the database
-    const isConnected = dbState === 1 || (mongoose.connection.db && mongoose.connection.db.databaseName);
-    const actualStatus = isConnected ? "connected" : dbStatus[dbState] || "unknown";
+    let actualStatus = dbStatus[dbState] || "unknown";
+    let canQuery = false;
+    let dbName = null;
 
-    res.json({
-      status: "healthy",
+    // Additional check: try to ping the database
+    if (dbState === 1) {
+      try {
+        await mongoose.connection.db.admin().ping();
+        canQuery = true;
+        dbName = mongoose.connection.db.databaseName;
+        actualStatus = "connected";
+      } catch (pingError) {
+        actualStatus = "connected-but-unreachable";
+        log("Database ping failed:", pingError.message);
+      }
+    }
+
+    const responseStatus = actualStatus === "connected" ? 200 : 503;
+    
+    res.status(responseStatus).json({
+      status: actualStatus === "connected" ? "healthy" : "degraded",
       timestamp: new Date(),
       database: actualStatus,
       version: "1.0.0",
       connectionState: dbState,
-      databaseName: mongoose.connection.db ? mongoose.connection.db.databaseName : null,
+      databaseName: dbName,
+      canQuery,
+      uptime: process.uptime(),
+      environment: process.env.NODE_ENV || "development",
     });
   } catch (error) {
+    logError("Health check error:", error);
     res.status(500).json({
       status: "unhealthy",
       error: error.message,
+      timestamp: new Date(),
     });
   }
 });
