@@ -81,7 +81,11 @@ connectDB()
   });
 
 // Middleware
-app.use(cors());
+const corsOptions = {
+  origin: process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : true,
+  credentials: true
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Enhanced debug and performance middleware
