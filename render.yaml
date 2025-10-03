@@ -8,7 +8,7 @@ backend:
   env:
     - NODE_ENV=production
     - PORT=5000
-    - MONGODB_URI=mongodb+srv://user:password@pointToYourMongoDB
+    - MONGODB_URI=mongodb+srv://pms:96ghjVcQKWnjPSnN@podmanagement.yv8dt9t.mongodb.net/?retryWrites=true&w=majority&appName=podManagement
     - ALLOWED_ORIGINS=pathToFrontend
     - DEBUG=false
 
