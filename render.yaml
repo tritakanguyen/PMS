@@ -8,7 +8,7 @@ backend:
   env:
     - NODE_ENV=production
     - PORT=5000
-    - MONGODB_URI=mongodb+srv://<admin>:<JXZWEMU6z4w1SvIJ>@podmanagement.yv8dt9t.mongodb.net/?retryWrites=true&w=majority&appName=podManagement
+    - MONGODB_URI=mongodb+srv://admin:JXZWEMU6z4w1SvIJ@podmanagement.yv8dt9t.mongodb.net/?retryWrites=true&w=majority&appName=podManagement
     - ALLOWED_ORIGINS=https://pms-eqvv.onrender.com
 
 # Frontend Service Configuration (Create as Static Site)

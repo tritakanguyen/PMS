@@ -10,7 +10,8 @@
     "install-client": "cd client && npm install",
     "install-server": "cd server && npm install",
     "install-database": "cd database && npm install",
-    "install-all": "npm run install-server && npm run install-client && npm run install-database",
+    "install-all": "npm run install-database && npm run install-server && npm run install-client",
+    "install-backend": "npm run install-database && npm run install-server",
     "heroku-postbuild": "npm run install-all && npm run build"
   },
   "repository": {
