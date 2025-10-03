@@ -1117,11 +1117,17 @@ app.get("/health", (req, res) => {
       3: "disconnecting",
     };
 
+    // Additional check: if connection exists and we can access the database
+    const isConnected = dbState === 1 || (mongoose.connection.db && mongoose.connection.db.databaseName);
+    const actualStatus = isConnected ? "connected" : dbStatus[dbState] || "unknown";
+
     res.json({
       status: "healthy",
       timestamp: new Date(),
-      database: dbStatus[dbState] || "unknown",
+      database: actualStatus,
       version: "1.0.0",
+      connectionState: dbState,
+      databaseName: mongoose.connection.db ? mongoose.connection.db.databaseName : null,
     });
   } catch (error) {
     res.status(500).json({

@@ -4,28 +4,10 @@ const connectDB = async () => {
   try {
     const mongoURI =
       process.env.MONGODB_URI ||
-      "mongodb+srv://admin:mNMl6LdMhJyPrKWF@podmanagement.yv8dt9t.mongodb.net/?retryWrites=true&w=majority&appName=podManagement";
-    await mongoose.connect(mongoURI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      // Connection pool optimization
-      maxPoolSize: 50, // Maximum number of connections in pool (default: 100)
-      minPoolSize: 10, // Minimum number of connections (default: 0)
-      socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
-      serverSelectionTimeoutMS: 10000, // Timeout for server selection (10s)
-      heartbeatFrequencyMS: 10000, // How often to check server status
-      // Performance optimizations
-      autoIndex: false, // Disable auto-indexing in production for better performance
-      retryWrites: true, // Automatically retry failed writes
-      retryReads: true, // Automatically retry failed reads
-      compressors: ["zlib"], // Enable compression for network traffic
-      zlibCompressionLevel: 6, // Compression level (0-9, default: 6)
-    });
+      "mongodb+srv://pms:96ghjVcQKWnjPSnN@podmanagement.yv8dt9t.mongodb.net/?retryWrites=true&w=majority&appName=podManagement";
+    await mongoose.connect(mongoURI);
 
-    console.log("MongoDB connected successfully with optimized pool settings");
-    console.log(
-      `Connection pool: min=${mongoose.connection.minPoolSize}, max=${mongoose.connection.maxPoolSize}`
-    );
+    console.log("MongoDB connected successfully");
 
     // Monitor connection pool performance
     mongoose.connection.on("connected", () => {
