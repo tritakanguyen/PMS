@@ -8,8 +8,8 @@ backend:
   env:
     - NODE_ENV=production
     - PORT=5000
-    - MONGODB_URI=mongodb+srv://pms:96ghjVcQKWnjPSnN@podmanagement.yv8dt9t.mongodb.net/?retryWrites=true&w=majority&appName=podManagement
-    - ALLOWED_ORIGINS=https://pms-5bax.onrender.com
+    - MONGODB_URI=mongodb+srv://user:password@pointToYourMongoDB
+    - ALLOWED_ORIGINS=pathToFrontend
     - DEBUG=false
 
 # Frontend Service Configuration (Create as Static Site)
@@ -20,6 +20,6 @@ frontend:
   buildCommand: npm install && npm run build
   publishDirectory: build
   env:
-    - REACT_APP_API_URL=https://pms-backend-60nq.onrender.com
+    - REACT_APP_API_URL=pathToBackend
     - NODE_ENV=production
     - GENERATE_SOURCEMAP=false

@@ -3,8 +3,7 @@ const mongoose = require("mongoose");
 const connectDB = async () => {
   try {
     const mongoURI =
-      process.env.MONGODB_URI ||
-      "mongodb+srv://pms:96ghjVcQKWnjPSnN@podmanagement.yv8dt9t.mongodb.net/?retryWrites=true&w=majority&appName=podManagement";
+      process.env.MONGODB_URI;
     await mongoose.connect(mongoURI);
 
     console.log("MongoDB connected successfully");
