@@ -1162,7 +1162,7 @@ app.get("/health", async (req, res) => {
 });
 
 // Start server with error handling
-const server = app.listen(PORT, () => {
+const server = app.listen(PORT, async () => {
   log(`Server running on http://localhost:${PORT}`);
   log("Available endpoints:");
   log("Pod endpoints:");
@@ -1212,6 +1212,64 @@ const server = app.listen(PORT, () => {
   log("");
   log("Utility endpoints:");
   log("- GET    /health                            - Health check");
+  
+  // Perform automatic health check on startup
+  log("");
+  log("=".repeat(60));
+  log("Performing automatic health check...");
+  log("=".repeat(60));
+  
+  try {
+    const dbState = mongoose.connection.readyState;
+    const dbStatus = {
+      0: "disconnected",
+      1: "connected",
+      2: "connecting",
+      3: "disconnecting",
+    };
+
+    let actualStatus = dbStatus[dbState] || "unknown";
+    let canQuery = false;
+    let dbName = null;
+
+    if (dbState === 1) {
+      try {
+        await mongoose.connection.db.admin().ping();
+        canQuery = true;
+        dbName = mongoose.connection.db.databaseName;
+        actualStatus = "connected";
+      } catch (pingError) {
+        actualStatus = "connected-but-unreachable";
+        logError("⚠️  Database ping failed:", pingError.message);
+      }
+    }
+
+    // Log health check results
+    console.log("\n📊 HEALTH CHECK RESULTS:");
+    console.log("━".repeat(60));
+    console.log(`Status:           ${actualStatus === "connected" ? "✅ healthy" : "❌ degraded"}`);
+    console.log(`Database:         ${actualStatus === "connected" ? "✅" : "❌"} ${actualStatus}`);
+    console.log(`Connection State: ${dbState} (${dbStatus[dbState] || "unknown"})`);
+    console.log(`Database Name:    ${dbName || "N/A"}`);
+    console.log(`Can Query:        ${canQuery ? "✅ Yes" : "❌ No"}`);
+    console.log(`Version:          1.0.0`);
+    console.log(`Environment:      ${process.env.NODE_ENV || "development"}`);
+    console.log(`Uptime:           ${process.uptime().toFixed(2)}s`);
+    console.log("━".repeat(60));
+    
+    if (actualStatus !== "connected") {
+      console.error("\n⚠️  WARNING: Database is not connected!");
+      console.error("The server is running but database operations will fail.");
+      console.error("Please check MongoDB Atlas Network Access settings.");
+      console.error("Visit: https://cloud.mongodb.com/\n");
+    } else {
+      console.log("\n✅ All systems operational!\n");
+    }
+  } catch (error) {
+    logError("\n❌ Health check failed:", error.message);
+  }
+  
+  log("=".repeat(60));
 });
 
 server.on("error", (error) => {
