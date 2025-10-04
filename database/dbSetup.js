@@ -15,16 +15,7 @@ const connectDB = async () => {
     mongoose.set('bufferCommands', false);
     mongoose.set('strictQuery', false);
     
-    await mongoose.connect(mongoURI, {
-      serverSelectionTimeoutMS: 30000,
-      socketTimeoutMS: 45000,
-      maxPoolSize: 10,
-      retryWrites: true,
-      retryReads: true,
-      connectTimeoutMS: 30000,
-      heartbeatFrequencyMS: 10000, // Check connection health every 10 seconds
-      family: 4 // Use IPv4, skip trying IPv6
-    });
+    await mongoose.connect(mongoURI);
 
     console.log("✓ MongoDB connected successfully");
     console.log("✓ Database name:", mongoose.connection.db.databaseName);
